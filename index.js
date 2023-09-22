@@ -23,11 +23,15 @@ const AuthRouter = require("./routes/auth.router")
 const CategoryRouter = require("./routes/category.router")
 const SubCategoryRouter = require("./routes/subcategory.router")
 const ContactRouter = require("./routes/contact.router")
+const ServiceRouter = require("./routes/service.router")
+const ReviewRouter = require("./routes/review.router")
 
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/category", CategoryRouter);
 app.use("/api/v1/subcategory", SubCategoryRouter);
 app.use("/api/v1/contact", ContactRouter);
+app.use("/api/v1/service", ServiceRouter);
+app.use("/api/v1/review", ReviewRouter);
 
 
 app.listen(port, () => {
