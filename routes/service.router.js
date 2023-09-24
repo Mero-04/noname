@@ -1,7 +1,7 @@
 const express = require('express');
 const { isAdmin } = require('../middlewares/authMiddleware');
 const router = express.Router();
-const { Services } = require("../models/model");
+const { Services, SubCategory, Category } = require("../models/model");
 const imageUpload = require("../helpers/image-upload")
 const multer = require("multer");
 const upload = multer({ dest: "./public/img" });
@@ -9,7 +9,7 @@ const fs = require('fs')
 const path = require("path")
 
 router.get("/", async (req, res) => {
-    await Services.findAll().then((services) => { res.json({ services: services }) })
+    await Services.findAll({ include: [{ model: SubCategory}] }).then((services) => { res.json({ services: services }) })
 })
 
 router.post("/create", imageUpload.upload.single("service_img"), async (req, res) => {
@@ -22,14 +22,14 @@ router.post("/create", imageUpload.upload.single("service_img"), async (req, res
         phone_num: req.body.phone_num,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        subCategoryId: req.body.subCategoryId
+        subcategoryId: req.body.subcategoryId
     }).then(() => {
         res.json({ success: "Serviss üstünlikli goşuldy" })
     }).catch((error) => { res.status(500).json({ error: error }) })
 });
 
 router.get("/edit/:serviceId", async (req, res) => {
-    await Services.findOne({ where: { id: req.params.serviceId } }).then((service) => {
+    await Services.findOne({ include: { model: SubCategory }, where: { id: req.params.serviceId } }).then((service) => {
         res.json({ service: service })
     })
 });

@@ -1,7 +1,7 @@
 const express = require('express');
 const { isAdmin } = require('../middlewares/authMiddleware');
 const router = express.Router();
-const { SubCategory } = require("../models/model");
+const { SubCategory, Category } = require("../models/model");
 const imageUpload = require("../helpers/image-upload")
 const multer = require("multer");
 const upload = multer({ dest: "./public/img" });
@@ -9,7 +9,7 @@ const fs = require('fs')
 const path = require("path")
 
 router.get("/", async (req, res) => {
-    await SubCategory.findAll().then((subcategory) => { res.json({ subcategory: subcategory }) })
+    await SubCategory.findAll({include: {model: Category}}).then((subcategory) => { res.json({ subcategory: subcategory }) })
 })
 
 router.post("/create", imageUpload.upload.single("subcategory_img"), async (req, res) => {
@@ -24,13 +24,16 @@ router.post("/create", imageUpload.upload.single("subcategory_img"), async (req,
     }).catch((error) => { res.status(500).json({ error: error }) })
 });
 
-router.get("/edit/:subcategoryId",  async (req, res) => {
-    await SubCategory.findOne({ where: { id: req.params.subcategoryId } }).then((subcategory) => {
+router.get("/edit/:subcategoryId", async (req, res) => {
+    await SubCategory.findOne({
+        include: { model: Category },
+        where: { id: req.params.subcategoryId }
+    }).then((subcategory) => {
         res.json({ subcategory: subcategory })
     })
 });
 
-router.post("/edit/:subcategoryId", imageUpload.upload.single("subcategory_img"),  async (req, res) => {
+router.post("/edit/:subcategoryId", imageUpload.upload.single("subcategory_img"), async (req, res) => {
     let img = req.body.category_img;
     if (req.file) {
         img = req.file.filename;
