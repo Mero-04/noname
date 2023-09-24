@@ -25,6 +25,7 @@ const SubCategoryRouter = require("./routes/subcategory.router")
 const ContactRouter = require("./routes/contact.router")
 const ServiceRouter = require("./routes/service.router")
 const ReviewRouter = require("./routes/review.router")
+const BannerRouter = require("./routes/banner.router")
 
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/category", CategoryRouter);
@@ -32,6 +33,7 @@ app.use("/api/v1/subcategory", SubCategoryRouter);
 app.use("/api/v1/contact", ContactRouter);
 app.use("/api/v1/service", ServiceRouter);
 app.use("/api/v1/review", ReviewRouter);
+app.use("/api/v1/banner", BannerRouter);
 
 
 app.listen(port, () => {
