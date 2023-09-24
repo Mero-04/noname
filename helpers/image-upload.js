@@ -14,9 +14,12 @@ const storage = multer.diskStorage({
         else if (file.fieldname === "service_img") {
             cb(null, './public/img/service/');
         }
+        else if (file.fieldname === "banner_img") {
+            cb(null, './public/img/banner/');
+        }
     },
     filename: function (req, file, cb) {
-        if (file.fieldname === "service_img") {
+        if (file.fieldname === "service_img" || file.fieldname === "banner_img") {
             cb(null, path.parse(file.fieldname).name + "_" + path.parse(file.originalname).name + path.extname(file.originalname));
         } else {
             cb(null, path.parse(file.fieldname).name + "_" + path.parse(req.body.name_tm).name + path.extname(file.originalname));

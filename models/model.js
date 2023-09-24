@@ -193,6 +193,54 @@ const Review = sequelize.define("reviews", {
 
 });
 
+
+const Banner = sequelize.define("banner", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: true
+    },
+    title_tm: {
+        type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
+            notEmpty: { msg: "Bannerin adyny giriziň!" }
+        }
+    },
+    title_en: {
+        type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
+            notEmpty: { msg: "Bannerin adyny giriziň!" }
+        }
+    },
+    title_ru: {
+        type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
+            notEmpty: { msg: "Bannerin adyny giriziň!" }
+        }
+    },
+    description_tm: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Bannerin mazmunyny giriziň!" }
+        }
+    },
+    description_en: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Bannerin mazmunyny giriziň!" }
+        }
+    },
+    description_ru: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Bannerin mazmunyny giriziň!" }
+        }
+    },
+    url: {
+        type: DataTypes.STRING, allowNull: false
+    },
+    banner_img: {
+        type: DataTypes.STRING, allowNull: false, validate: {
+            notEmpty: { msg: "Surat giriziň!" }
+        }
+    }
+});
+
 Admin.findOrCreate({ where: { email: "admin@gmail.com", password: "$2b$10$.2s8SLEln9Dnql5sPuvtfec93qtcKyvMAqDY8zeLg8IcndoHNtXWS", role: "Admin" } })
 
 
@@ -215,5 +263,6 @@ module.exports = {
     SubCategory,
     User,
     Services,
-    Review
+    Review,
+    Banner
 };
