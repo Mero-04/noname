@@ -11,9 +11,12 @@ const storage = multer.diskStorage({
         else if (file.fieldname === "subcategory_img") {
             cb(null, './public/img/subcategory/');
         }
+        else if (file.fieldname === "service_img") {
+            cb(null, './public/img/service/');
+        }
     },
     filename: function (req, file, cb) {
-        if (file.fieldname === "") {
+        if (file.fieldname === "service_img") {
             cb(null, path.parse(file.fieldname).name + "_" + path.parse(file.originalname).name + path.extname(file.originalname));
         } else {
             cb(null, path.parse(file.fieldname).name + "_" + path.parse(req.body.name_tm).name + path.extname(file.originalname));
