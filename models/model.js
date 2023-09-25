@@ -201,17 +201,17 @@ const Banner = sequelize.define("banner", {
         primaryKey: true,
         allowNull: true
     },
-    title_tm: {
+    name_tm: {
         type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
             notEmpty: { msg: "Bannerin adyny giriziň!" }
         }
     },
-    title_en: {
+    name_en: {
         type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
             notEmpty: { msg: "Bannerin adyny giriziň!" }
         }
     },
-    title_ru: {
+    name_ru: {
         type: DataTypes.STRING, allowNull: false, unique: { args: true, msg: "Bu banner önem bar!" }, validate: {
             notEmpty: { msg: "Bannerin adyny giriziň!" }
         }
