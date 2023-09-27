@@ -142,6 +142,21 @@ const Services = sequelize.define("services", {
             notEmpty: { msg: "Servisin adyny giriziň!" }
         }
     },
+    description_tm: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Servisin mazmunyny giriziň!" }
+        }
+    },
+    description_en: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Servisin mazmunyny giriziň!" }
+        }
+    },
+    description_ru: {
+        type: DataTypes.TEXT, allowNull: false, validate: {
+            notEmpty: { msg: "Servisin mazmunyny giriziň!" }
+        }
+    },
     address: {
         type: DataTypes.STRING, allowNull: false, validate: {
             notEmpty: { msg: "Adrressini giriziň!", msg_ru: "!", msg_en: "empty!" }
