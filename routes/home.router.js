@@ -9,6 +9,12 @@ router.get("/category", async (req, res) => {
     })
 });
 
+router.get("/subcategory", async (req, res) => {
+    await SubCategory.findAll().then((subcategory) => {
+        { res.json({ subcategory: subcategory }) }
+    })
+});
+
 
 router.get("/service", async (req, res) => {
     await Services.findAll({ include: { model: SubCategory } }).then((services) => {

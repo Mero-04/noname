@@ -182,6 +182,16 @@ const Services = sequelize.define("services", {
             notEmpty: { msg: "Suratyny giriziň!", msg_ru: "!", msg_en: "empty!" }
         }
     },
+    exp_price: {
+        type: DataTypes.ENUM('Arzan', 'Gymmat', 'Lux'), allowNull: true, validate: {
+            notEmpty: { msg: "Baha gornus saylan!" }
+        }
+    },
+    business_acc: {
+        type: DataTypes.TINYINT, defaultValue: 0, allowNull: true, validate: {
+            notEmpty: { msg: "Baha gornus saylan!" }
+        }
+    },
 
 });
 
