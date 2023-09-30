@@ -17,8 +17,40 @@ router.get("/subcategory", async (req, res) => {
 
 
 router.get("/service", async (req, res) => {
-    await Services.findAll({ include: { model: SubCategory } }).then((services) => {
-        { res.json({ services: services }) }
+    const search = req.query.search || "";
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const limit = req.query.limit ? parseInt(req.query.limit) : 16;
+    const offset = (page - 1) * limit;
+    var before = offset > 0 ? page - 1 : 1;
+    var next = page + 1;
+    await Services.findAndCountAll({
+        offset,
+        limit,
+        include: { model: SubCategory },
+        order: [
+            ["id", "DESC"]
+        ],
+        where: {
+            checked: "1",
+            [Op.or]: [
+                { name_tm: { [Op.like]: '%' + search + '%' } },
+                { name_en: { [Op.like]: '%' + search + '%' } },
+                { name_ru: { [Op.like]: '%' + search + '%' } }
+            ]
+        }
+    }).then((services) => {
+        {
+            res.json({
+                services: services.rows,
+                pagination: {
+                    before: before,
+                    next: next,
+                    page: page,
+                    total: services.count,
+                    pages: Math.ceil(services.count / limit)
+                }
+            })
+        }
     })
 })
 

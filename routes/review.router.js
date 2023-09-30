@@ -25,27 +25,13 @@ router.get("/", isAdmin, async (req, res) => {
 });
 
 router.post("/create", validateToken, async (req, res) => {
-    const token = req.body.token;
-    try {
-        const response = await axios.post(
-            `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY_CAPTCHA}&response=${token}`
-        );
-
-        if (response.data.success) {
-            await Review.create({
-                stars: req.body.stars,
-                comment: req.body.comment,
-                userId: req.user.id,
-                serviceId: req.body.serviceId
-            }).then(() => { res.json({ success: "Hatyňyz üstünlikli ugradyldy" }) })
-                .catch((error) => { res.status(500).json({ error: error }) })
-        } else {
-            res.json({ error: "Captcha yalňyş!" });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Näsazlyk yüze çykdy!" });
-    }
+    await Review.create({
+        stars: req.body.stars,
+        comment: req.body.comment,
+        userId: req.user.id,
+        serviceId: req.body.serviceId
+    }).then(() => { res.json({ success: "Hatyňyz üstünlikli ugradyldy" }) })
+        .catch((error) => { res.status(500).json({ error: error }) })
 });
 
 router.get("/edit/:reviewId", isAdmin, async (req, res) => {
