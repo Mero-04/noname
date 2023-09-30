@@ -191,7 +191,7 @@ const Services = sequelize.define("services", {
         type: DataTypes.TINYINT, defaultValue: 0, allowNull: true, validate: {
             notEmpty: { msg: "Baha gornus saylan!" }
         }
-    },
+    }
 
 });
 

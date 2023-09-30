@@ -2,6 +2,8 @@ const express = require("express");
 const { isAdmin } = require("../middlewares/authMiddleware");
 const router = express.Router();
 const { Category, SubCategory, Services, Review, Banner } = require("../models/model");
+const { Op } = require("sequelize");
+const Sequelize = require('../data/db');
 
 router.get("/category", async (req, res) => {
     await Category.findAll().then((category) => {
@@ -31,7 +33,6 @@ router.get("/service", async (req, res) => {
             ["id", "DESC"]
         ],
         where: {
-            checked: "1",
             [Op.or]: [
                 { name_tm: { [Op.like]: '%' + search + '%' } },
                 { name_en: { [Op.like]: '%' + search + '%' } },
