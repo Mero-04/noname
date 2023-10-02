@@ -1,13 +1,17 @@
 const express = require("express");
 const { isAdmin } = require("../middlewares/authMiddleware");
 const router = express.Router();
-const { Category, SubCategory, Services, Review, Banner } = require("../models/model");
+const { Category, SubCategory, Services, Review, Banner, User } = require("../models/model");
 const { Op } = require("sequelize");
 const Sequelize = require('../data/db');
 
 router.get("/category", async (req, res) => {
-    await Category.findAll().then((category) => {
-        { res.json({ category: category }) }
+    Category.findAll({
+        include: [{
+            model: SubCategory
+        }]
+    }).then((category) => {
+        return res.json({ category: category })
     })
 });
 
@@ -64,6 +68,23 @@ router.get("/service/:serviceId", async (req, res) => {
     })
 })
 
+
+
+// service gora review getiryar, star sany kopi basda getiryar
+router.get("/review/:serviceId", async (req, res) => {
+    await Review.findAll({
+        order: [
+            ["stars", "DESC"]
+        ],
+        where: { serviceId: req.params.serviceId },
+        include: [
+            { model: User },
+            { model: Services }
+        ]
+    }).then((review) => {
+        { res.json({ review: review }) }
+    })
+})
 
 
 
