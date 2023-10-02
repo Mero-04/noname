@@ -4,7 +4,7 @@ const router = express.Router();
 const { Review } = require("../models/model");
 const axios = require("axios")
 
-router.get("/", isAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
     const page = req.query.page ? parseInt(req.query.page) : 1;
     const limit = req.query.limit ? parseInt(req.query.limit) : 20;
     const offset = (page - 1) * limit;
@@ -25,6 +25,7 @@ router.get("/", isAdmin, async (req, res) => {
 });
 
 router.post("/create", validateToken, async (req, res) => {
+    console.log(req.user);
     await Review.create({
         stars: req.body.stars,
         comment: req.body.comment,
