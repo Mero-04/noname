@@ -183,14 +183,12 @@ const Services = sequelize.define("services", {
         }
     },
     exp_price: {
-        type: DataTypes.ENUM('Arzan', 'Gymmat', 'Lux'), allowNull: true, validate: {
+        type: DataTypes.ENUM('Arzan', 'Orta', 'Gymmat', 'Has gymmat'), allowNull: false, validate: {
             notEmpty: { msg: "Baha gornus saylan!" }
         }
     },
     business_acc: {
-        type: DataTypes.TINYINT, defaultValue: 0, allowNull: true, validate: {
-            notEmpty: { msg: "Baha gornus saylan!" }
-        }
+        type: DataTypes.TINYINT, defaultValue: "0", allowNull: true
     }
 
 });
@@ -266,20 +264,23 @@ const Banner = sequelize.define("banner", {
     }
 });
 
-Admin.findOrCreate({ where: { email: "admin@gmail.com", password: "$2b$10$.2s8SLEln9Dnql5sPuvtfec93qtcKyvMAqDY8zeLg8IcndoHNtXWS", role: "Admin" } })
 
+Admin.findOrCreate({ where: { email: "admin@gmail.com", password: "$2b$10$.2s8SLEln9Dnql5sPuvtfec93qtcKyvMAqDY8zeLg8IcndoHNtXWS", role: "Admin" } });
 
 Category.hasMany(SubCategory, { onDelete: "cascade", onUpdate: "cascade" })
-SubCategory.belongsTo(Category)
+SubCategory.belongsTo(Category);
+
+User.hasMany(Services, { onDelete: "cascade", onUpdate: "cascade" })
+Services.belongsTo(User);
 
 SubCategory.hasMany(Services, { onDelete: "cascade", onUpdate: "cascade" })
-Services.belongsTo(SubCategory)
+Services.belongsTo(SubCategory);
 
 User.hasMany(Review, { onDelete: "cascade", onUpdate: "cascade" })
-Review.belongsTo(User)
+Review.belongsTo(User);
 
 Services.hasMany(Review, { onDelete: "cascade", onUpdate: "cascade" })
-Review.belongsTo(Services)
+Review.belongsTo(Services);
 
 module.exports = {
     Admin,
