@@ -183,7 +183,7 @@ const Services = sequelize.define("services", {
         }
     },
     exp_price: {
-        type: DataTypes.ENUM('Arzan', 'Orta', 'Gymmat', 'Has gymmat'), allowNull: false, validate: {
+        type: DataTypes.STRING, allowNull: false, validate: {
             notEmpty: { msg: "Baha gornus saylan!" }
         }
     },
