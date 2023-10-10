@@ -26,6 +26,15 @@ router.get("/category/:categoryId", async (req, res) => {
     })
 });
 
+router.get("/subcategory", async (req, res) => {
+    await SubCategory.findAll({
+        include: [
+            {model: Category}
+        ]
+    }).then((subcategory) => {
+        { res.json({ subcategory: subcategory }) }
+    })
+});
 
 router.get("/subcategory/:subcategoryId", async (req, res) => {
     await Services.findAll({
