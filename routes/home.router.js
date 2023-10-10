@@ -15,9 +15,27 @@ router.get("/category", async (req, res) => {
     })
 });
 
-router.get("/subcategory", async (req, res) => {
-    await SubCategory.findAll().then((subcategory) => {
-        { res.json({ subcategory: subcategory }) }
+router.get("/category/:categoryId", async (req, res) => {
+    SubCategory.findAll({
+        include: [{
+            model: Category
+        }],
+        where: { categoryId : req.params.categoryId}
+    }).then((subcategory) => {
+        return res.json({ subcategory: subcategory })
+    })
+});
+
+
+router.get("/subcategory/:subcategoryId", async (req, res) => {
+    await Services.findAll({
+        include: [
+            {model: SubCategory},
+            {model: User}
+        ],
+        where: {subcategoryId: req.params.subcategoryId}
+    }).then((services) => {
+        { res.json({ services: services }) }
     })
 });
 
